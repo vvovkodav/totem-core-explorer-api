@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: core-explorer-api
+  name: core-explorer-api
+spec:
+  selector:
+    app: core-explorer-api
+  ports:
+    - port: 80
+      name: http
+      targetPort: 3000

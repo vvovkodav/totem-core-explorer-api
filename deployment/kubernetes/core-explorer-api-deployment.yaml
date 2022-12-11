@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: core-explorer-api
+  name: core-explorer-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: core-explorer-api
+  template:
+    metadata:
+      labels:
+        app: core-explorer-api
+    spec:
+      containers:
+        - name: core-explorer-api
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "3000"
+            - name: REDIS_URL
+              value: redis://redis:6379/0
+            - name: EXPLORER_BACKEND_URL
+              value: core-explorer-backend:50051
+          image:
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 3000
+            timeoutSeconds: 1
