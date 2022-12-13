@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { IsBigNumber } from '../../utils/validations/IsBigNumber';
 
-export class CreateGameRecordDto {
+export class CreateGameLegacyRequestDto {
   @ApiProperty({ description: 'BigNumber contract game index' })
   @IsBigNumber()
   @IsNotEmpty()
@@ -13,4 +13,9 @@ export class CreateGameRecordDto {
   @IsString()
   @IsNotEmpty()
   data: string;
+}
+
+export class CreateGameLegacyResponseDto {
+  @ApiProperty({ description: 'transaction hash' })
+  txHash: string;
 }

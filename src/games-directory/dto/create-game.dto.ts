@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 import { IsValidAddress } from '../../utils/validations/IsValidAddress';
 
-export class CreateGameDto {
+export class CreateGameRequestDto {
   @ApiProperty({ description: 'owner address' })
   @IsValidAddress()
   @IsNotEmpty()
@@ -43,4 +43,9 @@ export class CreateGameDto {
   @IsString()
   @IsNotEmpty()
   website: string;
+}
+
+export class CreateGameResponseDto {
+  @ApiProperty({ description: 'transaction hash' })
+  txHash: string;
 }
