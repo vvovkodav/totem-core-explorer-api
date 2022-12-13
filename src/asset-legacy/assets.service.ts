@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 import { status } from '@grpc/grpc-js';
 import { Long } from '@grpc/proto-loader';
 
-import { CreateAssetRecordDto } from './dto/create-record.dto';
+import { CreateAssetRecordRequestDto, CreateAssetRecordResponseDto } from './dto/create-record.dto';
 import { PaginatedDto } from '../utils/dto/paginated.dto';
 import { AssetLegacyRecordDto } from './dto/legacy-record.dto';
 import { AssetLegacyService } from '../explorer-backend/asset-legacy/asset-legacy.service';
@@ -13,7 +13,7 @@ import { FindAllFiltersDto } from './dto/find-all-filters.dto';
 export class AssetsService {
   constructor(private assetsLegacyService: AssetLegacyService) {}
 
-  async create(assetType: AssetType, record: CreateAssetRecordDto) {
+  async create(assetType: AssetType, record: CreateAssetRecordRequestDto): Promise<CreateAssetRecordResponseDto> {
     try {
       return await this.assetsLegacyService.create({ assetType, ...record });
     } catch (e) {
@@ -28,7 +28,12 @@ export class AssetsService {
 
   async findAll(assetType: AssetType, filters: FindAllFiltersDto): Promise<PaginatedDto<AssetLegacyRecordDto>> {
     try {
-      const response = await this.assetsLegacyService.findAll({
+      const {
+        total,
+        limit,
+        offset,
+        results = [],
+      } = await this.assetsLegacyService.findAll({
         assetType,
         filters: {
           playerAddress: filters.playerAddress || '',
@@ -39,10 +44,10 @@ export class AssetsService {
         offset: Long.fromString(filters.offset),
       });
       return {
-        total: response.total.toNumber(),
-        limit: response.total.toNumber(),
-        offset: response.offset.toNumber(),
-        results: response.results.map((record) => ({
+        total: total.toNumber(),
+        limit: limit.toNumber(),
+        offset: offset.toNumber(),
+        results: results.map((record) => ({
           assetId: record.assetId,
           gameId: record.gameId,
           timestamp: record.timestamp.toNumber(),

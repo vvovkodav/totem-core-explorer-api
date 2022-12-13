@@ -6,7 +6,7 @@ import { ExplorerProvider } from '../explorer-backend.constants';
 import {
   AssetLegacy,
   CreateAssetLegacyRequest,
-  Empty,
+  CreateAssetLegacyResponse,
   FindAllRequest,
   FindAllResponse,
   FindByIdRequest,
@@ -23,8 +23,8 @@ export class AssetLegacyService implements OnModuleInit {
     this.service = this.client.getService<AssetLegacy>('AssetLegacy');
   }
 
-  async create(request: CreateAssetLegacyRequest): Promise<Empty> {
-    return await firstValueFrom<Empty>(this.service.Create(request));
+  async create(request: CreateAssetLegacyRequest): Promise<CreateAssetLegacyResponse> {
+    return await firstValueFrom<CreateAssetLegacyResponse>(this.service.Create(request));
   }
 
   async findAll(request: FindAllRequest): Promise<FindAllResponse> {

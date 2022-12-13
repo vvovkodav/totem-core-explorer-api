@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { ExplorerProvider } from '../explorer-backend.constants';
 import {
   CreateGameRequest,
+  CreateGameResponse,
   Empty,
   GamesDirectory,
   UpdateGameAssetFilterRequest,
@@ -28,8 +29,8 @@ export class GamesDirectoryService implements OnModuleInit {
     this.service = this.client.getService<GamesDirectory>('GamesDirectory');
   }
 
-  async create(request: CreateGameRequest): Promise<Empty> {
-    return await firstValueFrom<Empty>(this.service.Create(request));
+  async create(request: CreateGameRequest): Promise<CreateGameResponse> {
+    return await firstValueFrom<CreateGameResponse>(this.service.Create(request));
   }
 
   async updateGameOwner(request: UpdateGameOwnerRequest): Promise<Empty> {

@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsBigNumber } from '../../utils/validations/IsBigNumber';
 import { IsValidAddress } from '../../utils/validations/IsValidAddress';
 
-export class CreateAssetRecordDto {
+export class CreateAssetRecordRequestDto {
   @ApiProperty({ description: 'player address' })
   @IsValidAddress()
   @IsNotEmpty()
@@ -24,4 +24,9 @@ export class CreateAssetRecordDto {
   @IsString()
   @IsNotEmpty()
   data: string;
+}
+
+export class CreateAssetRecordResponseDto {
+  @ApiProperty({ description: 'transaction hash' })
+  txHash: string;
 }

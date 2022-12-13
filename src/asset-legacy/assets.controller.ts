@@ -9,7 +9,7 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import { AssetsService } from './assets.service';
-import { CreateAssetRecordDto } from './dto/create-record.dto';
+import { CreateAssetRecordRequestDto, CreateAssetRecordResponseDto } from './dto/create-record.dto';
 import { AssetLegacyRecordDto } from './dto/legacy-record.dto';
 import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
 import { AssetType } from '../utils/enums';
@@ -19,18 +19,19 @@ import { FindAllFiltersDto } from './dto/find-all-filters.dto';
 @ApiTags('Assets Legacy')
 @ApiExtraModels(PaginatedDto)
 @ApiExtraModels(AssetLegacyRecordDto)
+@ApiExtraModels(CreateAssetRecordResponseDto)
 @Controller('asset-legacy')
 export class AssetsController {
   constructor(private service: AssetsService) {}
 
   @Post(':assetType')
   @ApiParam({ name: 'assetType', enum: ['avatar', 'asset', 'gem'] })
-  @ApiCreatedResponse({ description: 'Created' })
+  @ApiCreatedResponse({ description: 'Created', schema: { $ref: getSchemaPath(CreateAssetRecordResponseDto) } })
   @ApiBadRequestResponse({ description: 'Invalid request body' })
   async create(
     @Param('assetType', new AssetTypePipe()) assetType: AssetType,
-    @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) createRecordDto: CreateAssetRecordDto,
-  ) {
+    @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) createRecordDto: CreateAssetRecordRequestDto,
+  ): Promise<CreateAssetRecordResponseDto> {
     return await this.service.create(assetType, createRecordDto);
   }
 

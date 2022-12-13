@@ -4,13 +4,13 @@ import { firstValueFrom } from 'rxjs';
 
 import { ExplorerProvider } from '../explorer-backend.constants';
 import {
-  GameLegacy,
   CreateGameLegacyRequest,
-  Empty,
+  CreateGameLegacyResponse,
   FindAllRequest,
   FindAllResponse,
   FindByIdRequest,
   FindByIdResponse,
+  GameLegacy,
 } from './game-legacy.interface';
 
 @Injectable()
@@ -23,8 +23,8 @@ export class GameLegacyService implements OnModuleInit {
     this.service = this.client.getService<GameLegacy>('GameLegacy');
   }
 
-  async create(request: CreateGameLegacyRequest): Promise<Empty> {
-    return await firstValueFrom<Empty>(this.service.Create(request));
+  async create(request: CreateGameLegacyRequest): Promise<CreateGameLegacyResponse> {
+    return await firstValueFrom<CreateGameLegacyResponse>(this.service.Create(request));
   }
 
   async findAll(request: FindAllRequest): Promise<FindAllResponse> {

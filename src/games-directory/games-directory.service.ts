@@ -2,14 +2,14 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 import { status } from '@grpc/grpc-js';
 
 import { GamesDirectoryService as ExplorerGamesDirectory } from '../explorer-backend/games-directory/games-directory.service';
-import { CreateGameDto } from './dto/create-game.dto';
+import { CreateGameRequestDto } from './dto/create-game.dto';
 import { GameStatus } from '../utils/enums';
 
 @Injectable()
 export class GamesDirectoryService {
   constructor(private gamesDirectoryService: ExplorerGamesDirectory) {}
 
-  async create(record: CreateGameDto) {
+  async create(record: CreateGameRequestDto) {
     try {
       return await this.gamesDirectoryService.create({ ...record, status: GameStatus.ACCEPTED });
     } catch (e) {
