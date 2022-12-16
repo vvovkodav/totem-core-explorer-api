@@ -22,7 +22,7 @@ export class GameRecordDto {
   avatarFilter: string;
 
   @ApiProperty({ description: 'asset filter url' })
-  assetFilter: string;
+  itemFilter: string;
 
   @ApiProperty({ description: 'gem filter' })
   gemFilter: string;

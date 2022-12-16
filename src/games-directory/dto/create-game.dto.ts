@@ -1,47 +1,47 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { IsValidAddress } from '../../utils/validations/IsValidAddress';
 
 export class CreateGameRequestDto {
-  @ApiProperty({ description: 'owner address' })
+  @ApiProperty({ description: 'owner address', required: true })
   @IsValidAddress()
   @IsNotEmpty()
   owner: string;
 
-  @ApiProperty({ description: 'game name' })
+  @ApiProperty({ description: 'game name', required: true })
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ description: 'author name' })
+  @ApiProperty({ description: 'author name', required: true })
   @IsString()
   @IsNotEmpty()
   author: string;
 
-  @ApiProperty({ description: 'renderer url' })
+  @ApiProperty({ description: 'renderer url', required: false })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   renderer: string;
 
-  @ApiProperty({ description: 'avatar filter' })
+  @ApiProperty({ description: 'avatar filter', required: false })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   avatarFilter: string;
 
-  @ApiProperty({ description: 'asset filter' })
+  @ApiProperty({ description: 'asset filter', required: false })
   @IsString()
-  @IsNotEmpty()
-  assetFilter: string;
+  @IsOptional()
+  itemFilter: string;
 
-  @ApiProperty({ description: 'gem filter' })
+  @ApiProperty({ description: 'gem filter', required: false })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   gemFilter: string;
 
-  @ApiProperty({ description: 'website url' })
+  @ApiProperty({ description: 'website url', required: false })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   website: string;
 }
 
