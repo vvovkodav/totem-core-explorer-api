@@ -8,7 +8,7 @@ import {
   CreateGameResponse,
   Empty,
   GamesDirectory,
-  UpdateGameAssetFilterRequest,
+  UpdateGameItemFilterRequest,
   UpdateGameAuthorRequest,
   UpdateGameAvatarFilterRequest,
   UpdateGameGemFilterRequest,
@@ -53,8 +53,8 @@ export class GamesDirectoryService implements OnModuleInit {
     return await firstValueFrom<Empty>(this.service.UpdateGameAvatarFilter(request));
   }
 
-  async updateGameAssetFilter(request: UpdateGameAssetFilterRequest): Promise<Empty> {
-    return await firstValueFrom<Empty>(this.service.UpdateGameAssetFilter(request));
+  async updateGameItemFilter(request: UpdateGameItemFilterRequest): Promise<Empty> {
+    return await firstValueFrom<Empty>(this.service.UpdateGameItemFilter(request));
   }
 
   async updateGameGemFilter(request: UpdateGameGemFilterRequest): Promise<Empty> {
