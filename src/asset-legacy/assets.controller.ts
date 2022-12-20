@@ -25,7 +25,7 @@ export class AssetsController {
   constructor(private service: AssetsService) {}
 
   @Post(':assetType')
-  @ApiParam({ name: 'assetType', enum: ['avatar', 'asset', 'gem'] })
+  @ApiParam({ name: 'assetType', enum: ['avatar', 'item', 'gem'] })
   @ApiCreatedResponse({ description: 'Created', schema: { $ref: getSchemaPath(CreateAssetRecordResponseDto) } })
   @ApiBadRequestResponse({ description: 'Invalid request body' })
   async create(
@@ -36,7 +36,7 @@ export class AssetsController {
   }
 
   @Get(':assetType')
-  @ApiParam({ name: 'assetType', enum: ['avatar', 'asset', 'gem'] })
+  @ApiParam({ name: 'assetType', enum: ['avatar', 'item', 'gem'] })
   @ApiPaginatedResponse(AssetLegacyRecordDto, {
     description: 'Paginated list of the asset legacy records',
   })
@@ -48,7 +48,7 @@ export class AssetsController {
   }
 
   @Get(':assetType/:id')
-  @ApiParam({ name: 'assetType', enum: ['avatar', 'asset', 'gem'] })
+  @ApiParam({ name: 'assetType', enum: ['avatar', 'item', 'gem'] })
   @ApiOkResponse({
     schema: { $ref: getSchemaPath(AssetLegacyRecordDto) },
     description: 'Asset legacy record',
