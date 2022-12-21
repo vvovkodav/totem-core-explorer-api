@@ -7,8 +7,8 @@ export class AssetTypePipe implements PipeTransform<string, AssetType> {
     switch (value) {
       case 'avatar':
         return AssetType.AVATAR;
-      case 'asset':
-        return AssetType.ASSET;
+      case 'item':
+        return AssetType.ITEM;
       case 'gem':
         return AssetType.GEM;
       default:
