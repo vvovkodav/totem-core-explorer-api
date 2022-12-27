@@ -36,6 +36,9 @@ export class GameRecordDto {
   @ApiProperty({ description: 'updated at timestamp in seconds' })
   updatedAt: number;
 
-  @ApiProperty({ enum: GameStatus, description: 'game status', example: GameStatus.PENDING })
-  status: number;
+  @ApiProperty({
+    enum: [GameStatus.Pending, GameStatus.Accepted, GameStatus.Rejected, GameStatus.Banned],
+    description: '0 - Pending, 1 - Accepted, 2 - Rejected, 3 - Banned',
+  })
+  status: GameStatus;
 }
