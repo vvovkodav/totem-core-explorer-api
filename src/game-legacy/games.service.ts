@@ -34,7 +34,7 @@ export class GamesService {
         results = [],
       } = await this.gamesLegacyService.findAll({
         filters: {
-          gameId: filters.gameId || '',
+          gameAddress: filters.gameAddress || '',
         },
         limit: Long.fromString(filters.limit),
         offset: Long.fromString(filters.offset),
@@ -43,11 +43,9 @@ export class GamesService {
         total: total.toNumber(),
         limit: limit.toNumber(),
         offset: offset.toNumber(),
-        results: results.map(({ recordId, gameId, timestamp, data }) => ({
-          recordId,
-          gameId,
-          timestamp: timestamp.toNumber(),
-          data,
+        results: results.map((record) => ({
+          ...record,
+          timestamp: record.timestamp.toNumber(),
         })),
       };
     } catch (e) {
@@ -64,10 +62,8 @@ export class GamesService {
     try {
       const { record } = await this.gamesLegacyService.findById({ recordId });
       return {
-        recordId: record.recordId,
-        gameId: record.gameId,
+        ...record,
         timestamp: record.timestamp.toNumber(),
-        data: record.data,
       };
     } catch (e) {
       switch (e.code) {

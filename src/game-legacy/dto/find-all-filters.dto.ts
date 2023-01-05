@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsNumberString, IsOptional } from 'class-validator';
-import { IsBigNumber } from '../../utils/validations/IsBigNumber';
+
+import { IsValidAddress } from '../../utils/validations/IsValidAddress';
 
 export class FindAllFiltersDto {
-  @ApiProperty({ description: 'BigNumber contract game index', required: false })
-  @IsBigNumber()
+  @ApiProperty({ description: 'game address', required: false })
+  @IsValidAddress()
   @IsOptional()
-  gameId?: string;
+  gameAddress?: string;
 
   @ApiProperty({ enum: [5, 10, 20], required: true, default: 10 })
   @IsIn(['5', '10', '20'])

@@ -27,9 +27,9 @@ export class GamesDirectoryService {
     }
   }
 
-  async update(id: string, request: UpdateGameRequestDto): Promise<UpdateGameResponseDto> {
+  async update(gameAddress: string, request: UpdateGameRequestDto): Promise<UpdateGameResponseDto> {
     try {
-      return await this.gamesDirectoryService.update({ recordId: id, ...request });
+      return await this.gamesDirectoryService.update({ gameAddress, ...request });
     } catch (e) {
       switch (e.code) {
         case status.UNAVAILABLE:
@@ -48,7 +48,7 @@ export class GamesDirectoryService {
         offset,
         results = [],
       } = await this.gamesDirectoryService.findAll({
-        filters: { owner: filters.owner, status: filters.status },
+        filters: { ownerAddress: filters.ownerAddress, status: filters.status },
         limit: Long.fromString(filters.limit),
         offset: Long.fromString(filters.offset),
       });
@@ -72,9 +72,9 @@ export class GamesDirectoryService {
     }
   }
 
-  async findById(recordId: string): Promise<GameRecordDto> {
+  async findByAddress(gameAddress: string): Promise<GameRecordDto> {
     try {
-      const { record } = await this.gamesDirectoryService.findById({ recordId });
+      const { record } = await this.gamesDirectoryService.findByAddress({ gameAddress });
       return {
         ...record,
         createdAt: record.createdAt.toNumber(),

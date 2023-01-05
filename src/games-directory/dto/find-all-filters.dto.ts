@@ -5,14 +5,14 @@ import { IsValidAddress } from '../../utils/validations/IsValidAddress';
 import { GameStatus } from '../../utils/enums';
 
 export class FindAllFiltersDto {
-  @ApiProperty({ description: 'game owner address', required: false })
+  @ApiProperty({ description: 'owner address', required: false })
   @IsValidAddress()
   @IsOptional()
-  owner?: string;
+  ownerAddress?: string;
 
   @ApiProperty({
     enum: [GameStatus.Pending, GameStatus.Accepted, GameStatus.Rejected, GameStatus.Banned],
-    description: '0 - Pending, 1 - Accepted, 2 - Rejected, 3 - Banned',
+    description: '1 - Pending, 2 - Accepted, 3 - Rejected, 4 - Banned',
     required: false,
   })
   @Transform(({ value }) => (value ? parseInt(value, 10) : value))

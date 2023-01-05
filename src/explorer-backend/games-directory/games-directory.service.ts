@@ -8,6 +8,8 @@ import {
   CreateGameResponse,
   FindAllRequest,
   FindAllResponse,
+  FindByAddressRequest,
+  FindByAddressResponse,
   FindByIdRequest,
   FindByIdResponse,
   GamesDirectory,
@@ -39,5 +41,9 @@ export class GamesDirectoryService implements OnModuleInit {
 
   async findById(request: FindByIdRequest): Promise<FindByIdResponse> {
     return await firstValueFrom<FindByIdResponse>(this.service.FindById(request));
+  }
+
+  async findByAddress(request: FindByAddressRequest): Promise<FindByAddressResponse> {
+    return await firstValueFrom<FindByAddressResponse>(this.service.FindByAddress(request));
   }
 }

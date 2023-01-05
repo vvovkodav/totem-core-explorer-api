@@ -4,8 +4,8 @@ export class GameLegacyRecordDto {
   @ApiProperty({ description: 'contract record index' })
   recordId: string;
 
-  @ApiProperty({ description: 'BigNumber contract game index' })
-  gameId: string;
+  @ApiProperty({ description: 'game address' })
+  gameAddress: string;
 
   @ApiProperty({ description: 'created at block timestamp in seconds' })
   timestamp: number;

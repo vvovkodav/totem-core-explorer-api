@@ -8,6 +8,7 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 
+import { ValidAddressPipe } from '../utils/pipes/valid-address.pipe';
 import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
 import { GamesDirectoryService } from './games-directory.service';
 import { CreateGameRequestDto, CreateGameResponseDto } from './dto/create-game.dto';
@@ -33,17 +34,17 @@ export class GamesDirectoryController {
     return await this.service.create(createGameDto);
   }
 
-  @Patch(':id')
+  @Patch(':address')
   @ApiOkResponse({
     description: 'Updated successfully, returning transaction hashes of the updated fields only',
     schema: { $ref: getSchemaPath(UpdateGameResponseDto) },
   })
   @ApiBadRequestResponse({ description: 'Invalid request body' })
   async update(
-    @Param('id') id: string,
+    @Param('address', new ValidAddressPipe()) address: string,
     @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) updateGameDto: UpdateGameRequestDto,
   ): Promise<UpdateGameResponseDto> {
-    return await this.service.update(id, updateGameDto);
+    return await this.service.update(address, updateGameDto);
   }
 
   @Get()
@@ -54,12 +55,12 @@ export class GamesDirectoryController {
     return await this.service.findAll(filters);
   }
 
-  @Get(':id')
+  @Get(':address')
   @ApiOkResponse({
     schema: { $ref: getSchemaPath(GameRecordDto) },
     description: 'Game record',
   })
-  async findById(@Param('id') id: string): Promise<GameRecordDto> {
-    return await this.service.findById(id);
+  async findByAddress(@Param('address', new ValidAddressPipe()) address: string): Promise<GameRecordDto> {
+    return await this.service.findByAddress(address);
   }
 }
