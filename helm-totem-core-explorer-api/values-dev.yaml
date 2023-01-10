@@ -27,7 +27,7 @@ ingress:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80},[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
   hosts:
-    - host: test-totem-core-explorer-api.totem-explorer.com
+    - host: test-dev-totem-core-explorer-api.totem-explorer.com
       paths:
         - path: /
           pathType: Prefix
