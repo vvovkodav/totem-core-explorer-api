@@ -59,9 +59,5 @@ tolerations:
 
 env:
    PORT: "3000"
-   REDIS_STORAGE_URI: "redis://redis:6379/0"
-   MONGODB_DATABASE: "web-explorer"
-   MONGODB_ADMIN_DATABASE: "web-explorer-admin"
-   AWS_REGION: "us-east-2"
-   AWS_S3_ENDPOINT: ""
-   AWS_S3_BUCKET: "totem-web-explorer"
+   REDIS_URL: 
+   EXPLORER_BACKEND_URL:
