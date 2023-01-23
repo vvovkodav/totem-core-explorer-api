@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseFilters, ValidationPipe } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -9,17 +9,21 @@ import {
 } from '@nestjs/swagger';
 
 import { GamesService } from './games.service';
+import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
+import { UnhandledExceptionFilter } from '../utils/filters';
 import { CreateGameLegacyRequestDto, CreateGameLegacyResponseDto } from './dto/create-record.dto';
 import { GameLegacyRecordDto } from './dto/legacy-record.dto';
-import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
 import { FindAllFiltersDto } from './dto/find-all-filters.dto';
 import { legacyGamesAddresses, legacyGamesIds } from '../utils/temp/legacyGamesMapping';
 
 @ApiTags('Games Legacy')
 @ApiExtraModels(PaginatedDto)
 @ApiExtraModels(GameLegacyRecordDto)
+@ApiExtraModels(CreateGameLegacyRequestDto)
 @ApiExtraModels(CreateGameLegacyResponseDto)
+@ApiExtraModels(FindAllFiltersDto)
 @Controller('game-legacy')
+@UseFilters(new UnhandledExceptionFilter())
 export class GamesController {
   constructor(private service: GamesService) {}
 

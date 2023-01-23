@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseFilters, ValidationPipe } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -8,20 +8,25 @@ import {
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
+
 import { AssetsService } from './assets.service';
+import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
+import { UnhandledExceptionFilter } from '../utils/filters';
 import { CreateAssetRecordRequestDto, CreateAssetRecordResponseDto } from './dto/create-record.dto';
 import { AssetLegacyRecordDto } from './dto/legacy-record.dto';
-import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
-import { AssetType } from '../utils/enums';
-import { AssetTypePipe } from '../utils/pipes/asset-type.pipe';
 import { FindAllFiltersDto } from './dto/find-all-filters.dto';
+import { AssetType } from '../utils/enums';
+import { AssetTypePipe } from '../utils/pipes';
 import { legacyGamesAddresses, legacyGamesIds } from '../utils/temp/legacyGamesMapping';
 
 @ApiTags('Assets Legacy')
 @ApiExtraModels(PaginatedDto)
 @ApiExtraModels(AssetLegacyRecordDto)
+@ApiExtraModels(CreateAssetRecordRequestDto)
 @ApiExtraModels(CreateAssetRecordResponseDto)
+@ApiExtraModels(FindAllFiltersDto)
 @Controller('asset-legacy')
+@UseFilters(new UnhandledExceptionFilter())
 export class AssetsController {
   constructor(private service: AssetsService) {}
 
@@ -67,8 +72,8 @@ export class AssetsController {
   @Get(':assetType/:id')
   @ApiParam({ name: 'assetType', enum: ['avatar', 'item', 'gem'] })
   @ApiOkResponse({
-    schema: { $ref: getSchemaPath(AssetLegacyRecordDto) },
     description: 'Asset legacy record',
+    schema: { $ref: getSchemaPath(AssetLegacyRecordDto) },
   })
   async findById(
     @Param('assetType', new AssetTypePipe()) assetType: AssetType,
