@@ -1,13 +1,13 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsBigNumber } from '../../utils/validations/IsBigNumber';
+import { IsValidAddress } from '../../utils/validations/IsValidAddress';
 
 export class CreateGameLegacyRequestDto {
-  @ApiProperty({ description: 'BigNumber contract game index' })
-  @IsBigNumber()
+  @ApiProperty({ description: 'game address' })
+  @IsValidAddress()
   @IsNotEmpty()
-  gameId: string;
+  gameAddress: string;
 
   @ApiProperty({ description: 'schemaless legacy record data' })
   @IsString()

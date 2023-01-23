@@ -15,10 +15,10 @@ export class CreateAssetRecordRequestDto {
   @IsNotEmpty()
   assetId: string;
 
-  @ApiProperty({ description: 'BigNumber contract game index' })
-  @IsBigNumber()
+  @ApiProperty({ description: 'game address' })
+  @IsValidAddress()
   @IsNotEmpty()
-  gameId: string;
+  gameAddress: string;
 
   @ApiProperty({ description: 'schemaless legacy record data' })
   @IsString()

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, ValidationPipe } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -23,10 +23,14 @@ export class GamesController {
   constructor(private service: GamesService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ transform: true, stopAtFirstError: true }))
-  @ApiCreatedResponse({ description: 'Created', schema: { $ref: getSchemaPath(CreateGameLegacyResponseDto) } })
+  @ApiCreatedResponse({
+    description: 'Created successfully',
+    schema: { $ref: getSchemaPath(CreateGameLegacyResponseDto) },
+  })
   @ApiBadRequestResponse({ description: 'Invalid request body' })
-  async create(@Body() request: CreateGameLegacyRequestDto): Promise<CreateGameLegacyResponseDto> {
+  async create(
+    @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) request: CreateGameLegacyRequestDto,
+  ): Promise<CreateGameLegacyResponseDto> {
     return this.service.create(request);
   }
 
@@ -34,7 +38,9 @@ export class GamesController {
   @ApiPaginatedResponse(GameLegacyRecordDto, {
     description: 'Paginated list of the asset legacy records with query filters',
   })
-  async findAll(@Query() filters: FindAllFiltersDto): Promise<PaginatedDto<GameLegacyRecordDto>> {
+  async findAll(
+    @Query(new ValidationPipe({ transform: true, stopAtFirstError: true })) filters: FindAllFiltersDto,
+  ): Promise<PaginatedDto<GameLegacyRecordDto>> {
     return this.service.findAll(filters);
   }
 

@@ -1,14 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
-
 import { IsValidAddress } from '../../utils/validations/IsValidAddress';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateGameRequestDto {
-  @ApiProperty({ description: 'game address', required: true })
-  @IsValidAddress()
-  @IsNotEmpty()
-  gameAddress: string;
+import { GameStatus } from '../../utils/enums';
 
+export class UpdateGameRequestDto {
   @ApiProperty({ description: 'owner address', required: true })
   @IsValidAddress()
   @IsNotEmpty()
@@ -43,9 +39,17 @@ export class CreateGameRequestDto {
   @ApiProperty({ description: 'website url', required: false })
   @IsString()
   website: string;
+
+  @ApiProperty({
+    enum: [GameStatus.Pending, GameStatus.Accepted, GameStatus.Rejected, GameStatus.Banned],
+    description: '1 - Pending, 2 - Accepted, 3 - Rejected, 4 - Banned',
+    required: false,
+  })
+  @IsEnum(GameStatus)
+  status: GameStatus;
 }
 
-export class CreateGameResponseDto {
-  @ApiProperty({ description: 'transaction hash' })
+export class UpdateGameResponseDto {
+  @ApiProperty({ description: 'update transaction hash' })
   txHash: string;
 }

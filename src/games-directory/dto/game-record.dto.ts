@@ -3,11 +3,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { GameStatus } from '../../utils/enums';
 
 export class GameRecordDto {
-  @ApiProperty({ description: 'contract record index' })
-  recordId: string;
+  @ApiProperty({ description: 'game address' })
+  gameAddress: string;
 
   @ApiProperty({ description: 'owner address' })
-  owner: string;
+  ownerAddress: string;
 
   @ApiProperty({ description: 'game name' })
   name: string;
@@ -36,6 +36,9 @@ export class GameRecordDto {
   @ApiProperty({ description: 'updated at timestamp in seconds' })
   updatedAt: number;
 
-  @ApiProperty({ enum: GameStatus, description: 'game status', example: GameStatus.PENDING })
-  status: number;
+  @ApiProperty({
+    enum: [GameStatus.Pending, GameStatus.Accepted, GameStatus.Rejected, GameStatus.Banned],
+    description: '1 - Pending, 2 - Accepted, 3 - Rejected, 4 - Banned',
+  })
+  status: GameStatus;
 }

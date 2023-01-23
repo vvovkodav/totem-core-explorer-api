@@ -26,7 +26,10 @@ export class AssetsController {
 
   @Post(':assetType')
   @ApiParam({ name: 'assetType', enum: ['avatar', 'item', 'gem'] })
-  @ApiCreatedResponse({ description: 'Created', schema: { $ref: getSchemaPath(CreateAssetRecordResponseDto) } })
+  @ApiCreatedResponse({
+    description: 'Created successfully',
+    schema: { $ref: getSchemaPath(CreateAssetRecordResponseDto) },
+  })
   @ApiBadRequestResponse({ description: 'Invalid request body' })
   async create(
     @Param('assetType', new AssetTypePipe()) assetType: AssetType,
@@ -42,7 +45,7 @@ export class AssetsController {
   })
   async findAll(
     @Param('assetType', new AssetTypePipe()) assetType: AssetType,
-    @Query() filters: FindAllFiltersDto,
+    @Query(new ValidationPipe({ transform: true, stopAtFirstError: true })) filters: FindAllFiltersDto,
   ): Promise<PaginatedDto<AssetLegacyRecordDto>> {
     return await this.service.findAll(assetType, filters);
   }

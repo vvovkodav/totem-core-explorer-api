@@ -38,7 +38,7 @@ export class AssetsService {
         filters: {
           playerAddress: filters.playerAddress || '',
           assetId: filters.assetId || '',
-          gameId: filters.gameId || '',
+          gameAddress: filters.gameAddress || '',
         },
         limit: Long.fromString(filters.limit),
         offset: Long.fromString(filters.offset),
@@ -48,10 +48,8 @@ export class AssetsService {
         limit: limit.toNumber(),
         offset: offset.toNumber(),
         results: results.map((record) => ({
-          assetId: record.assetId,
-          gameId: record.gameId,
+          ...record,
           timestamp: record.timestamp.toNumber(),
-          data: record.data,
         })),
       };
     } catch (e) {
@@ -66,12 +64,10 @@ export class AssetsService {
 
   async findById(assetType: AssetType, recordId: string): Promise<AssetLegacyRecordDto> {
     try {
-      const response = await this.assetsLegacyService.findById({ assetType, recordId });
+      const { record } = await this.assetsLegacyService.findById({ assetType, recordId });
       return {
-        assetId: response.record.assetId,
-        gameId: response.record.gameId,
-        timestamp: response.record.timestamp.toNumber(),
-        data: response.record.data,
+        ...record,
+        timestamp: record.timestamp.toNumber(),
       };
     } catch (e) {
       switch (e.code) {
