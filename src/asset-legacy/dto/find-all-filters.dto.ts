@@ -12,12 +12,12 @@ export class FindAllFiltersDto {
   @ApiProperty({ description: 'BigNumber contract asset index', required: false })
   @IsBigNumber()
   @IsOptional()
-  assetId: string;
+  assetId?: string;
 
   @ApiProperty({ description: 'game address', required: false })
   @IsValidAddress()
   @IsOptional()
-  gameAddress: string;
+  gameAddress?: string;
 
   @ApiProperty({ enum: [5, 10, 20], required: true, default: 10 })
   @IsIn(['5', '10', '20'])

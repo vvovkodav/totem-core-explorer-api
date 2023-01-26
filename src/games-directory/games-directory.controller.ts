@@ -15,6 +15,7 @@ import { CreateGameRequestDto, CreateGameResponseDto } from './dto/create-game.d
 import { UpdateGameRequestDto, UpdateGameResponseDto } from './dto/update-game.dto';
 import { GameRecordDto } from './dto/game-record.dto';
 import { FindAllFiltersDto } from './dto/find-all-filters.dto';
+import { legacyGamesIds } from '../utils/temp/legacyGamesMapping';
 
 @ApiTags('Games Directory')
 @ApiExtraModels(PaginatedDto)
@@ -29,9 +30,9 @@ export class GamesDirectoryController {
   @ApiCreatedResponse({ description: 'Created successfully', schema: { $ref: getSchemaPath(CreateGameResponseDto) } })
   @ApiBadRequestResponse({ description: 'Invalid request body' })
   async create(
-    @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) createGameDto: CreateGameRequestDto,
+    @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) request: CreateGameRequestDto,
   ): Promise<CreateGameResponseDto> {
-    return await this.service.create(createGameDto);
+    return await this.service.create(request);
   }
 
   @Patch(':address')
@@ -52,7 +53,13 @@ export class GamesDirectoryController {
   async findAll(
     @Query(new ValidationPipe({ transform: true, stopAtFirstError: true })) filters: FindAllFiltersDto,
   ): Promise<PaginatedDto<GameRecordDto>> {
-    return await this.service.findAll(filters);
+    const res = await this.service.findAll(filters);
+    res.results.map((game) => {
+      if (Object.keys(legacyGamesIds).includes(game.gameAddress)) {
+        game.gameAddress = legacyGamesIds[game.gameAddress];
+      }
+    });
+    return res;
   }
 
   @Get(':address')
@@ -61,6 +68,10 @@ export class GamesDirectoryController {
     description: 'Game record',
   })
   async findByAddress(@Param('address', new ValidAddressPipe()) address: string): Promise<GameRecordDto> {
-    return await this.service.findByAddress(address);
+    const res = await this.service.findByAddress(address);
+    if (Object.keys(legacyGamesIds).includes(res.gameAddress)) {
+      res.gameAddress = legacyGamesIds[res.gameAddress];
+    }
+    return res;
   }
 }

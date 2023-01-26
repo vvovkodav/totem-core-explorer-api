@@ -15,6 +15,7 @@ import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
 import { AssetType } from '../utils/enums';
 import { AssetTypePipe } from '../utils/pipes/asset-type.pipe';
 import { FindAllFiltersDto } from './dto/find-all-filters.dto';
+import { legacyGamesAddresses, legacyGamesIds } from '../utils/temp/legacyGamesMapping';
 
 @ApiTags('Assets Legacy')
 @ApiExtraModels(PaginatedDto)
@@ -33,9 +34,12 @@ export class AssetsController {
   @ApiBadRequestResponse({ description: 'Invalid request body' })
   async create(
     @Param('assetType', new AssetTypePipe()) assetType: AssetType,
-    @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) createRecordDto: CreateAssetRecordRequestDto,
+    @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) request: CreateAssetRecordRequestDto,
   ): Promise<CreateAssetRecordResponseDto> {
-    return await this.service.create(assetType, createRecordDto);
+    if (Object.keys(legacyGamesAddresses).includes(request.gameAddress)) {
+      request.gameAddress = legacyGamesAddresses[request.gameAddress];
+    }
+    return await this.service.create(assetType, request);
   }
 
   @Get(':assetType')
@@ -47,6 +51,16 @@ export class AssetsController {
     @Param('assetType', new AssetTypePipe()) assetType: AssetType,
     @Query(new ValidationPipe({ transform: true, stopAtFirstError: true })) filters: FindAllFiltersDto,
   ): Promise<PaginatedDto<AssetLegacyRecordDto>> {
+    if (filters.gameAddress && Object.keys(legacyGamesAddresses).includes(filters.gameAddress)) {
+      filters.gameAddress = legacyGamesAddresses[filters.gameAddress];
+      const res = await this.service.findAll(assetType, filters);
+      res.results.map((game) => {
+        if (Object.keys(legacyGamesIds).includes(game.gameAddress)) {
+          game.gameAddress = legacyGamesIds[game.gameAddress];
+        }
+      });
+      return res;
+    }
     return await this.service.findAll(assetType, filters);
   }
 
@@ -60,6 +74,10 @@ export class AssetsController {
     @Param('assetType', new AssetTypePipe()) assetType: AssetType,
     @Param('id') id: string,
   ): Promise<AssetLegacyRecordDto> {
-    return await this.service.findById(assetType, id);
+    const res = await this.service.findById(assetType, id);
+    if (Object.keys(legacyGamesIds).includes(res.gameAddress)) {
+      res.gameAddress = legacyGamesIds[res.gameAddress];
+    }
+    return res;
   }
 }
