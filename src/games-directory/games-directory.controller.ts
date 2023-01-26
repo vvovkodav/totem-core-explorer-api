@@ -15,7 +15,6 @@ import { CreateGameRequestDto, CreateGameResponseDto } from './dto/create-game.d
 import { UpdateGameRequestDto, UpdateGameResponseDto } from './dto/update-game.dto';
 import { GameRecordDto } from './dto/game-record.dto';
 import { FindAllFiltersDto } from './dto/find-all-filters.dto';
-import { legacyGamesIds } from '../utils/temp/legacyGamesMapping';
 
 @ApiTags('Games Directory')
 @ApiExtraModels(PaginatedDto)
@@ -53,13 +52,7 @@ export class GamesDirectoryController {
   async findAll(
     @Query(new ValidationPipe({ transform: true, stopAtFirstError: true })) filters: FindAllFiltersDto,
   ): Promise<PaginatedDto<GameRecordDto>> {
-    const res = await this.service.findAll(filters);
-    res.results.map((game) => {
-      if (Object.keys(legacyGamesIds).includes(game.gameAddress)) {
-        game.gameAddress = legacyGamesIds[game.gameAddress];
-      }
-    });
-    return res;
+    return await this.service.findAll(filters);
   }
 
   @Get(':address')
@@ -68,10 +61,6 @@ export class GamesDirectoryController {
     description: 'Game record',
   })
   async findByAddress(@Param('address', new ValidAddressPipe()) address: string): Promise<GameRecordDto> {
-    const res = await this.service.findByAddress(address);
-    if (Object.keys(legacyGamesIds).includes(res.gameAddress)) {
-      res.gameAddress = legacyGamesIds[res.gameAddress];
-    }
-    return res;
+    return await this.service.findByAddress(address);
   }
 }
