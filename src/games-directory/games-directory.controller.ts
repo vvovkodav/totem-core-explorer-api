@@ -43,9 +43,9 @@ export class GamesDirectoryController {
   @ApiBadRequestResponse({ description: 'Invalid request body' })
   async update(
     @Param('address', new ValidAddressPipe()) address: string,
-    @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) updateGameDto: UpdateGameRequestDto,
+    @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) request: UpdateGameRequestDto,
   ): Promise<UpdateGameResponseDto> {
-    return await this.service.update(address, updateGameDto);
+    return await this.service.update(address, request);
   }
 
   @Get()
