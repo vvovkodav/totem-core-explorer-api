@@ -13,6 +13,7 @@ import { CreateGameLegacyRequestDto, CreateGameLegacyResponseDto } from './dto/c
 import { GameLegacyRecordDto } from './dto/legacy-record.dto';
 import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
 import { FindAllFiltersDto } from './dto/find-all-filters.dto';
+import { legacyGamesAddresses, legacyGamesIds } from '../utils/temp/legacyGamesMapping';
 
 @ApiTags('Games Legacy')
 @ApiExtraModels(PaginatedDto)
@@ -31,7 +32,10 @@ export class GamesController {
   async create(
     @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) request: CreateGameLegacyRequestDto,
   ): Promise<CreateGameLegacyResponseDto> {
-    return this.service.create(request);
+    if (Object.keys(legacyGamesAddresses).includes(request.gameAddress)) {
+      request.gameAddress = legacyGamesAddresses[request.gameAddress];
+    }
+    return await this.service.create(request);
   }
 
   @Get()
@@ -41,7 +45,17 @@ export class GamesController {
   async findAll(
     @Query(new ValidationPipe({ transform: true, stopAtFirstError: true })) filters: FindAllFiltersDto,
   ): Promise<PaginatedDto<GameLegacyRecordDto>> {
-    return this.service.findAll(filters);
+    if (filters.gameAddress && Object.keys(legacyGamesAddresses).includes(filters.gameAddress)) {
+      filters.gameAddress = legacyGamesAddresses[filters.gameAddress];
+      const res = await this.service.findAll(filters);
+      res.results.map((game) => {
+        if (Object.keys(legacyGamesIds).includes(game.gameAddress)) {
+          game.gameAddress = legacyGamesIds[game.gameAddress];
+        }
+      });
+      return res;
+    }
+    return await this.service.findAll(filters);
   }
 
   @Get(':id')
@@ -50,6 +64,10 @@ export class GamesController {
     schema: { $ref: getSchemaPath(GameLegacyRecordDto) },
   })
   async findById(@Param('id') id: string): Promise<GameLegacyRecordDto> {
-    return this.service.findById(id);
+    const res = await this.service.findById(id);
+    if (Object.keys(legacyGamesIds).includes(res.gameAddress)) {
+      res.gameAddress = legacyGamesIds[res.gameAddress];
+    }
+    return res;
   }
 }
