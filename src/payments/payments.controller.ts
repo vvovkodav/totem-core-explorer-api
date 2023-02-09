@@ -26,19 +26,14 @@ export class PaymentsController {
     return await this.service.createWithpaperPaymentLink(assetType, body.ownerAddress, body.successUrl);
   }
 
-  // @Post('webhook/:paymentSystem')
-  // @ApiResponse({
-  //   status: 200,
-  //   description: 'API returns oder id and url for payment',
-  //   type: Boolean,
-  // })
-  // @ApiOperation({ summary: 'API for process webhooks' })
-  // async webhook(@Param('paymentSystem') paymentSystem: PaymentSystem, @Body() body): Promise<boolean> {
-  //   if (paymentSystem === 'stripe') {
-  //     this.service.stripeWebhook(body);
-  //   } else if (paymentSystem === 'withpaper') {
-  //     this.service.withpaperWebhook(body);
-  //   }
-  //   return true;
-  // }
+  @Post('webhook/withpaper')
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+  })
+  @ApiOperation({ summary: 'API for process webhooks' })
+  async withpaperWebhook(@Body() body): Promise<boolean> {
+    await this.service.processWithpaperWebhook(body.event, body.result.metadata.orderId, body.result.transactionHash);
+    return true;
+  }
 }

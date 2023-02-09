@@ -3,7 +3,12 @@ import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
 import { ExplorerProvider } from '../explorer-backend.constants';
-import { CreateWithpaperPaymentLinkRequest, CreateWithpaperPaymentLinkResponse, Payments } from './payments.interface';
+import {
+  CreateWithpaperPaymentLinkRequest,
+  CreateWithpaperPaymentLinkResponse,
+  Payments,
+  ProcessWithpaperWebhookRequest,
+} from './payments.interface';
 
 @Injectable()
 export class PaymentsService implements OnModuleInit {
@@ -19,5 +24,9 @@ export class PaymentsService implements OnModuleInit {
     request: CreateWithpaperPaymentLinkRequest,
   ): Promise<CreateWithpaperPaymentLinkResponse> {
     return await firstValueFrom<CreateWithpaperPaymentLinkResponse>(this.service.CreateWithpaperPaymentLink(request));
+  }
+
+  async processWithpaperWebhook(request: ProcessWithpaperWebhookRequest): Promise<void> {
+    return await firstValueFrom<void>(this.service.ProcessWithpaperWebhook(request));
   }
 }

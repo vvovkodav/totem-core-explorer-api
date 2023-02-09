@@ -13,4 +13,12 @@ export class PaymentsService {
       successUrl,
     });
   }
+
+  async processWithpaperWebhook(event: string, orderId: string, txHash: string) {
+    return await this.paymentsService.processWithpaperWebhook({
+      event,
+      orderId,
+      txHash,
+    });
+  }
 }
