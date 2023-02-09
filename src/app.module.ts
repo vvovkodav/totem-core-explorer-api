@@ -6,6 +6,7 @@ import { GamesModule } from './game-legacy/games.module';
 import { GamesDirectoryModule } from './games-directory/games-directory.module';
 import { PublishersModule } from './publishers/publishers.module';
 import { PaymentKeysModule } from './payment-keys/payment-keys.module';
+import { AssetsModule as AssetsClaimModule } from './assets/assets.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PaymentKeysModule } from './payment-keys/payment-keys.module';
     GamesDirectoryModule,
     PublishersModule,
     PaymentKeysModule,
+    AssetsClaimModule,
   ],
   controllers: [],
   providers: [],
