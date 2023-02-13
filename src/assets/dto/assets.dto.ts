@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { ArrayNotEmpty, IsArray, IsNotEmpty, ValidateNested } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 import { IsValidAddress } from '../../utils/validations/IsValidAddress';
 
 export class ClaimAssetsRequestDTO {
