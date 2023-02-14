@@ -4,13 +4,13 @@ import { Long } from '@grpc/proto-loader';
 import { CreateAssetRecordRequestDto, CreateAssetRecordResponseDto } from './dto/create-record.dto';
 import { PaginatedDto } from '../utils/dto/paginated.dto';
 import { AssetLegacyRecordDto } from './dto/legacy-record.dto';
-import { AssetLegacyService } from '../explorer-backend/asset-legacy/asset-legacy.service';
+import { AssetLegacyService as ExplorerAssetLegacy } from '../explorer-backend/asset-legacy/asset-legacy.service';
 import { AssetType } from '../utils/enums';
 import { FindAllFiltersDto } from './dto/find-all-filters.dto';
 
 @Injectable()
-export class AssetsService {
-  constructor(private assetsLegacyService: AssetLegacyService) {}
+export class AssetLegacyService {
+  constructor(private assetsLegacyService: ExplorerAssetLegacy) {}
 
   async create(assetType: AssetType, record: CreateAssetRecordRequestDto): Promise<CreateAssetRecordResponseDto> {
     return await this.assetsLegacyService.create({ assetType, ...record });

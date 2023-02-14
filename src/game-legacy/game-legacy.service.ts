@@ -4,12 +4,12 @@ import { Long } from '@grpc/proto-loader';
 import { CreateGameLegacyRequestDto, CreateGameLegacyResponseDto } from './dto/create-record.dto';
 import { PaginatedDto } from '../utils/dto/paginated.dto';
 import { GameLegacyRecordDto } from './dto/legacy-record.dto';
-import { GameLegacyService } from '../explorer-backend/game-legacy/game-legacy.service';
+import { GameLegacyService as ExplorerGameLegacy } from '../explorer-backend/game-legacy/game-legacy.service';
 import { FindAllFiltersDto } from './dto/find-all-filters.dto';
 
 @Injectable()
-export class GamesService {
-  constructor(private gamesLegacyService: GameLegacyService) {}
+export class GameLegacyService {
+  constructor(private gamesLegacyService: ExplorerGameLegacy) {}
 
   async create(record: CreateGameLegacyRequestDto): Promise<CreateGameLegacyResponseDto> {
     return await this.gamesLegacyService.create(record);

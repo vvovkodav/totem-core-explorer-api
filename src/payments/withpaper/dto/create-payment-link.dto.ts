@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 import { IsValidAddress } from 'src/utils/validations/IsValidAddress';
 
-export class CreateWithpaperPaymentLinkRequestDto {
+export class CreatePaymentLinkRequestDto {
   @ApiProperty({ description: 'owner address', required: true })
   @IsValidAddress()
   @IsNotEmpty()
@@ -15,7 +15,7 @@ export class CreateWithpaperPaymentLinkRequestDto {
   successUrl: string;
 }
 
-export class CreateWithpaperPaymentLinkResponseDto {
+export class CreatePaymentLinkResponseDto {
   @ApiProperty({ description: 'created order id' })
   orderId: string;
 
