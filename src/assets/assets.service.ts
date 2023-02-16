@@ -6,7 +6,7 @@ import { AssetsService as ExplorerAssetsService } from '../explorer-backend/asse
 export class AssetsService {
   constructor(private service: ExplorerAssetsService) {}
 
-  async claimAssets(ownerAddress: string, assetType: AssetType) {
-    return await this.service.claimAsset({ ownerAddress, assetType });
+  async claim(ownerAddress: string, assetType: AssetType) {
+    return await this.service.claim({ ownerAddress, assetType });
   }
 }

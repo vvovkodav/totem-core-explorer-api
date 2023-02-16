@@ -9,7 +9,7 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 
-import { AssetsService } from './assets.service';
+import { AssetLegacyService } from './asset-legacy.service';
 import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
 import { UnhandledExceptionFilter } from '../utils/filters';
 import { CreateAssetRecordRequestDto, CreateAssetRecordResponseDto } from './dto/create-record.dto';
@@ -27,8 +27,8 @@ import { legacyGamesAddresses, legacyGamesIds } from '../utils/temp/legacyGamesM
 @ApiExtraModels(FindAllFiltersDto)
 @Controller('asset-legacy')
 @UseFilters(new UnhandledExceptionFilter())
-export class AssetsController {
-  constructor(private service: AssetsService) {}
+export class AssetLegacyController {
+  constructor(private service: AssetLegacyService) {}
 
   @Post(':assetType')
   @ApiParam({ name: 'assetType', enum: ['avatar', 'item', 'gem'] })

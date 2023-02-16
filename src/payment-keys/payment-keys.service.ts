@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Long } from '@grpc/proto-loader';
 
-import { PaymentKeysService as ExplorerPaymentKeysService } from '../explorer-backend/payment-keys/payment-keys.service';
+import { PaymentKeysService as ExplorerPaymentKeys } from '../explorer-backend/payment-keys/payment-keys.service';
 import { AssetType, PaymentKeyStatus } from '../utils/enums';
 
 @Injectable()
 export class PaymentKeysService {
-  constructor(private paymentsService: ExplorerPaymentKeysService) {}
+  constructor(private paymentsService: ExplorerPaymentKeys) {}
 
   async create(assetType: AssetType, apiKey: string, amount: number) {
     return await this.paymentsService.create({

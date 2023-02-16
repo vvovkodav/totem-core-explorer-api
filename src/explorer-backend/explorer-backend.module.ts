@@ -10,7 +10,7 @@ import { GamesDirectoryService } from './games-directory/games-directory.service
 import { PublishersService } from './publishers/publishers.service';
 import { PaymentKeysService } from './payment-keys/payment-keys.service';
 import { AssetsService } from './assets/assets.service';
-import { PaymentsService } from './payments/payments.service';
+import { WithpaperService } from './payments/withpaper/withpaper.service';
 
 @Module({
   imports: [ConfigModule],
@@ -30,7 +30,7 @@ import { PaymentsService } from './payments/payments.service';
               'publishers',
               'payment_keys',
               'assets',
-              'payments',
+              'withpaper',
             ],
             protoPath: [
               join(__dirname, 'asset-legacy', 'proto', 'asset_legacy.proto'),
@@ -39,7 +39,7 @@ import { PaymentsService } from './payments/payments.service';
               join(__dirname, 'publishers', 'proto', 'publishers.proto'),
               join(__dirname, 'payment-keys', 'proto', 'payment-keys.proto'),
               join(__dirname, 'assets', 'proto', 'assets.proto'),
-              join(__dirname, 'payments', 'proto', 'payments.proto'),
+              join(__dirname, 'payments', 'withpaper', 'proto', 'withpaper.proto'),
             ],
           },
         });
@@ -51,7 +51,7 @@ import { PaymentsService } from './payments/payments.service';
     PublishersService,
     PaymentKeysService,
     AssetsService,
-    PaymentsService,
+    WithpaperService,
   ],
   exports: [
     AssetLegacyService,
@@ -60,7 +60,7 @@ import { PaymentsService } from './payments/payments.service';
     PublishersService,
     PaymentKeysService,
     AssetsService,
-    PaymentsService,
+    WithpaperService,
   ],
 })
 export class ExplorerBackendModule {}

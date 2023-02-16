@@ -21,6 +21,6 @@ export class AssetsController {
     @Param('assetType', new AssetTypePipe()) assetType: AssetType,
     @Body(new ValidationPipe({ transform: true, stopAtFirstError: true })) body: ClaimAssetsRequestDTO,
   ) {
-    return await this.service.claimAssets(body.ownerAddress, assetType);
+    return await this.service.claim(body.ownerAddress, assetType);
   }
 }

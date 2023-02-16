@@ -8,7 +8,7 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 
-import { GamesService } from './games.service';
+import { GameLegacyService } from './game-legacy.service';
 import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
 import { UnhandledExceptionFilter } from '../utils/filters';
 import { CreateGameLegacyRequestDto, CreateGameLegacyResponseDto } from './dto/create-record.dto';
@@ -24,8 +24,8 @@ import { legacyGamesAddresses, legacyGamesIds } from '../utils/temp/legacyGamesM
 @ApiExtraModels(FindAllFiltersDto)
 @Controller('game-legacy')
 @UseFilters(new UnhandledExceptionFilter())
-export class GamesController {
-  constructor(private service: GamesService) {}
+export class GameLegacyController {
+  constructor(private service: GameLegacyService) {}
 
   @Post()
   @ApiCreatedResponse({

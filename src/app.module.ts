@@ -1,25 +1,25 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { HealthzModule } from './healthz/healthz.module';
-import { AssetsModule } from './asset-legacy/assets.module';
-import { GamesModule } from './game-legacy/games.module';
+import { AssetLegacyModule } from './asset-legacy/asset-legacy.module';
+import { GameLegacyModule } from './game-legacy/game-legacy.module';
 import { GamesDirectoryModule } from './games-directory/games-directory.module';
 import { PublishersModule } from './publishers/publishers.module';
 import { PaymentKeysModule } from './payment-keys/payment-keys.module';
 import { AssetsModule as AssetsClaimModule } from './assets/assets.module';
-import { PaymentsModule } from './payments/payments.module';
+import { WithpaperModule } from './payments/withpaper/withpaper.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     HealthzModule,
-    AssetsModule,
-    GamesModule,
+    AssetLegacyModule,
+    GameLegacyModule,
     GamesDirectoryModule,
     PublishersModule,
     PaymentKeysModule,
     AssetsClaimModule,
-    PaymentsModule,
+    WithpaperModule,
   ],
   controllers: [],
   providers: [],
