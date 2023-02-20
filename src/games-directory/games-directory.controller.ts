@@ -9,10 +9,10 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 
+import { UnhandledExceptionFilter } from '../utils/filters';
 import { ValidAddressPipe } from '../utils/pipes';
 import { ApiPaginatedResponse, PaginatedDto } from '../utils/dto/paginated.dto';
 import { GamesDirectoryService } from './games-directory.service';
-import { UnhandledExceptionFilter } from '../utils/filters';
 import { CreateGameRequestDto, CreateGameResponseDto } from './dto/create-game.dto';
 import { UpdateGameRequestDto, UpdateGameResponseDto } from './dto/update-game.dto';
 import { GameRecordDto } from './dto/game-record.dto';
