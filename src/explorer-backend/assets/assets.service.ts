@@ -3,7 +3,7 @@ import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
 import { ExplorerProvider } from '../explorer-backend.constants';
-import { Assets, ClaimRequest, ClaimResponse, CreateRequest, UpdateRequest } from './assets.interface';
+import { Assets, ClaimRequest, ClaimResponse, CreateRequest, InfoRequest, UpdateRequest } from './assets.interface';
 
 @Injectable()
 export class AssetsService implements OnModuleInit {
@@ -21,6 +21,10 @@ export class AssetsService implements OnModuleInit {
 
   async update(request: UpdateRequest) {
     return await firstValueFrom(this.service.Update(request));
+  }
+
+  async info(request: InfoRequest) {
+    return await firstValueFrom(this.service.Info(request));
   }
 
   async claim(request: ClaimRequest): Promise<ClaimResponse> {
