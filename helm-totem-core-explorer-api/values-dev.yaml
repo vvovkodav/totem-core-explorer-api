@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: 667950714614.dkr.ecr.us-east-1.amazonaws.com/totem-core-explorer-api
+  repository: 667950714614.dkr.ecr.us-east-2.amazonaws.com/totem-core-explorer-api
   pullPolicy: Always
   tag: "dev"
 
@@ -26,7 +26,7 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     external-dns.alpha.kubernetes.io/ingress-hostname-source: annotation-only
   hosts:
-    - host: test-dev-api.totem.gdn
+    - host: dev-api.totem.gdn
       paths:
         - path: /
           pathType: Prefix
@@ -58,6 +58,4 @@ tolerations:
     effect: "NoSchedule"
 
 env:
-   PORT: ""
-   REDIS_URL: ""
-   EXPLORER_BACKEND_URL: ""
+   ENV: ""
