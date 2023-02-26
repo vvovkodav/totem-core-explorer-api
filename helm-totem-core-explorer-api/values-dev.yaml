@@ -25,12 +25,12 @@ ingress:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/success-codes: '404'
     alb.ingress.kubernetes.io/group.name: main
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:667950714614:certificate/6d735c92-03f8-444f-b083-fba169ef5e82
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80},{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/scheme: internet-facing
+    external-dns.alpha.kubernetes.io/ingress-hostname-source: annotation-only
   hosts:
-    - host: dev-RECORD.totem.gdn
+    - host: dev-totem.totem.gdn
       paths:
         - path: /
           pathType: Prefix
