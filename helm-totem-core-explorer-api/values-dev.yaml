@@ -30,7 +30,7 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     external-dns.alpha.kubernetes.io/ingress-hostname-source: annotation-only
   hosts:
-    - host: dev-totem.totem.gdn
+    - host: dev-api.totem.gdn
       paths:
         - path: /
           pathType: Prefix
