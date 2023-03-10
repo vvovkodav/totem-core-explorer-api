@@ -5,6 +5,7 @@ export interface CreatePaymentLinkRequest {
   assetType: AssetType;
   ownerAddress: string;
   successUrl?: string;
+  imageUrl?: string;
 }
 
 export interface CreatePaymentLinkResponse {

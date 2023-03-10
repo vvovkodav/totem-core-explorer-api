@@ -7,11 +7,12 @@ import { WithpaperService as ExplorerPayments } from '../../explorer-backend/pay
 export class WithpaperService {
   constructor(private paymentsService: ExplorerPayments) {}
 
-  async createPaymentLink(assetType: AssetType, ownerAddress: string, successUrl: string) {
+  async createPaymentLink(assetType: AssetType, ownerAddress: string, successUrl: string, imageUrl: string) {
     return await this.paymentsService.createPaymentLink({
       assetType,
       ownerAddress,
       successUrl,
+      imageUrl,
     });
   }
 
