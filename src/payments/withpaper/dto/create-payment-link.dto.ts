@@ -16,6 +16,11 @@ export class CreatePaymentLinkRequestDto {
     required: false,
   })
   successUrl: string;
+
+  @ApiProperty({
+    description: 'If true then you will be redirected after payment',
+  })
+  redirect: boolean;
 }
 
 export class CreatePaymentLinkResponseDto {
